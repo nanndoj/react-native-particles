@@ -7,7 +7,7 @@ Declarative particle system for react native. Works on iOS and Android.
 ## Add it to your project
 
 1. Run `npm install react-native-particles --save`
-2. `import { Emitter } from 'react-native-particles`
+2. `import { Emitter } from 'react-native-particles'`
 
 ## Demo
 
