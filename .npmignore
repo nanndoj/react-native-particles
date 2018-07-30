@@ -1,5 +1,6 @@
 .idea
 Example
+coverage
 README.md
 .babelrc
 .prettierrc

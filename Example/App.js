@@ -7,7 +7,15 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Dimensions, Image, Button } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  Button
+} from 'react-native';
 
 import { Emitter } from 'react-native-particles';
 
@@ -40,7 +48,7 @@ export default class App extends Component<Props> {
           gravity={0.2}
           fromPosition={() => ({ x: width / 2 - 50, y: height / 2 - 160 })}
           style={{ position: 'absolute', top: 0, left: 0, zIndex: 999 }}
-          ref={(emitter) => this.emitter = emitter}
+          ref={emitter => (this.emitter = emitter)}
         >
           <Image
             source={require('./star.png')}
@@ -51,7 +59,7 @@ export default class App extends Component<Props> {
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
-        <Button title={"Click me"} onPress={() => this.emitter.start() }/>
+        <Button title={'Click me'} onPress={() => this.emitter.start()} />
       </View>
     );
   }
