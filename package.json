@@ -1,0 +1,53 @@
+{
+  "name": "react-native-particles",
+  "version": "0.0.1-beta",
+  "description": "Declarative particle system for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "prettier": "prettier",
+    "test:coverage": "npm run test -- --coverage",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanndoj/react-native-particles.git"
+  },
+  "keywords": [
+    "particles",
+    "emitter",
+    "react-native",
+    "declarative",
+    "performant",
+    "confetti",
+    "fireworks"
+  ],
+  "author": "Fernando Santos <nanndoj@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nanndoj/react-native-particles/issues"
+  },
+  "homepage": "https://github.com/nanndoj/react-native-particles#readme",
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.55",
+    "babel-preset-react-native": "4.0.0",
+    "husky": "^1.0.0-rc.13",
+    "jest": "^23.4.2",
+    "prettier": "^1.14.0"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.20.0"
+  },
+  "jest": {
+    "testURL": "http://localhost"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  }
+}
