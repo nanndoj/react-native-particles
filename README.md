@@ -48,49 +48,11 @@ const App = React.createClass({
 });
 ```
 
-## Injecting a custom tab bar
-
-Suppose we had a custom tab bar called `CustomTabBar`, we would inject
-it into our `ScrollableTabView` like this:
-
-```javascript
-var ScrollableTabView = require('react-native-scrollable-tab-view');
-var CustomTabBar = require('./CustomTabBar');
-
-var App = React.createClass({
-  render() {
-    return (
-      <ScrollableTabView renderTabBar={() => <CustomTabBar someProp={'here'} />}>
-        <ReactPage tabLabel="React" />
-        <FlowPage tabLabel="Flow" />
-        <JestPage tabLabel="Jest" />
-      </ScrollableTabView>
-    );
-  }
-});
-```
-To start you can just copy [DefaultTabBar](https://github.com/skv-headless/react-native-scrollable-tab-view/blob/master/DefaultTabBar.js).
-
 ## Examples
 
 ## Props
 
 ### Emitter
-
- /**  */
-  
-  /** */
-  segments: number,
-  /** Width of the emitter */
-  width: number,
-  /** Height of the emitter */
-  height: number,
-  /** Style of the emitter */
-  style?: any,
-  /** The particle content to be rendered */
-  children: Element<any>,
-  /** Reference to the Emiter  */
-  ref: EmitterType => void
 
 - **`numberOfParticles`** _(number)_ - The total of particles to be emitted
 - **`interval`** _(number)_ - Interval between emitting a new bunch of particles
