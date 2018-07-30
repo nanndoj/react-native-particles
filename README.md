@@ -2,12 +2,7 @@
 ## react-native-particles
 [![npm version](https://badge.fury.io/js/react-native-particles.svg)](https://badge.fury.io/js/react-native-particles)
 
-This is probably my favorite navigation pattern on Android, I wish it
-were more common on iOS! This is a very simple JavaScript-only
-implementation of it for React Native. For more information about how
-the animations behind this work, check out the Rebound section of the
-[React Native Animation Guide](https://facebook.github.io/react-native/docs/animations.html)
-
+Declarative particle system for react native. Works on iOS and Android.
 
 ## Add it to your project
 
