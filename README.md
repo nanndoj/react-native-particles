@@ -16,7 +16,7 @@ the animations behind this work, check out the Rebound section of the
 
 ## Demo
 
-![Basic Particles](https://github.com/nanndoj/react-native-particles/raw/master/Example/screenshots/particles.gif "Particles")
+![](https://raw.githubusercontent.com/nanndoj/react-native-particles/master/Example/screenshosts/particles.gif)
 
 ## Basic usage
 
