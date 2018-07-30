@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "prettier": "prettier",
+    "prettier": "prettier --config --write .prettierrc \"{,!(node_modules)/**/}*.{js,jsx}\"",
     "test:coverage": "npm run test -- --coverage",
     "test:watch": "npm run test -- --watch"
   },
@@ -46,7 +46,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
+      "pre-commit": "npm run prettier",
       "pre-push": "npm test"
     }
   }
