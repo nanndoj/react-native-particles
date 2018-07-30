@@ -117,7 +117,9 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
   }
 
   shouldComponentUpdate(nextProps: EmitterType, nextState: EmitterState) {
-    return this.state.visibleParticles.length !== nextState.visibleParticles.length;
+    return (
+      this.state.visibleParticles.length !== nextState.visibleParticles.length
+    );
   }
 
   stopEmitting() {
@@ -144,12 +146,23 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
 
   _cleanUp() {
     // Remove particles scheduled to be destroyed
-    this.particles = this.particles.filter(p => !this.particlesToDestroy.includes(p.particle.id));
+    this.particles = this.particles.filter(
+      p => !this.particlesToDestroy.includes(p.particle.id)
+    );
     this.particlesToDestroy = [];
   }
 
   _calculate() {
-    const { numberOfParticles, emissionRate, direction, speed, spread, gravity, segments, interval } = this.props;
+    const {
+      numberOfParticles,
+      emissionRate,
+      direction,
+      speed,
+      spread,
+      gravity,
+      segments,
+      interval
+    } = this.props;
     if (!this.isEmitting) return;
 
     if (this.particlesCounter >= numberOfParticles) {

@@ -1,6 +1,13 @@
 //@flow
 import { Vector } from '../../entities/Vector';
-import { add, fromAngle, getAngle, getMagnitude, toDegrees, toRadians } from '../vector-helpers';
+import {
+  add,
+  fromAngle,
+  getAngle,
+  getMagnitude,
+  toDegrees,
+  toRadians
+} from '../vector-helpers';
 
 const round2Decimals = v => Math.round(v * 100) / 100;
 
@@ -48,7 +55,10 @@ describe('Vector Helpers', () => {
     const result = fromAngle(angleInDegrees, magnitude);
 
     // Created the approximated result
-    const approximated = Vector(round2Decimals(result.x), round2Decimals(result.y));
+    const approximated = Vector(
+      round2Decimals(result.x),
+      round2Decimals(result.y)
+    );
 
     expect(approximated).toEqual(Vector(-2.85, 10.63));
   });
