@@ -2,7 +2,7 @@
 ## react-native-particles
 [![npm version](https://badge.fury.io/js/react-native-particles.svg)](https://badge.fury.io/js/react-native-particles)
 
-Declarative particle system for react native. Works on iOS and Android.
+Declarative particle system for react native. Works on iOS and Android. It uses `Animated` api and `useNativeDriver:true` to archieve 60 FPS particles animation
 
 ## Add it to your project
 
@@ -42,6 +42,8 @@ const App = React.createClass({
 ## Props
 
 ### Emitter
+
+Basically, the `children` of emmiter is clonned and transformed into a particle.
 
 - **`numberOfParticles`** _(number)_ - The total of particles to be emitted
 - **`interval`** _(number)_ - Interval between emitting a new bunch of particles
