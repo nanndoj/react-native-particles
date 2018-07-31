@@ -51,7 +51,7 @@ export default class App extends Component<Props> {
           ref={emitter => (this.emitter = emitter)}
         >
           <Image
-            source={require('./star.png')}
+            source={require('./assets/star.png')}
             resizeMode="stretch"
             style={{ width: 100, height: 100 }}
           />

@@ -22,7 +22,7 @@ const emitParticle = function(
   const newVelocity = fromAngle(angle, magnitude);
 
   // return our new Particle in the initialPosition without acceleration
-  return new Particle(initPosition, newVelocity, acceleration, id);
+  return Particle(newVelocity, acceleration, id, initPosition);
 };
 
 export default emitParticle;

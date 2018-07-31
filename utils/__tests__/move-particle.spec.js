@@ -11,7 +11,7 @@ describe('Move Particles', () => {
     // The new velocity should be v(4,4) after applying the acceleration
     const position = Vector(3, 8);
 
-    const particle = Particle(position, velocity, acceleration);
+    const particle = Particle(velocity, acceleration, 1, position);
 
     expect(move(particle).position).toEqual(Vector(7, 12));
   });
@@ -21,7 +21,7 @@ describe('Move Particles', () => {
     const acceleration = Vector(0, 0); // No acceleration
     const position = Vector(3, 8);
 
-    const particle = Particle(position, velocity, acceleration);
+    const particle = Particle(velocity, acceleration, 1, position);
 
     expect(move(particle).velocity).toEqual(Vector(2, 3));
   });
@@ -31,7 +31,7 @@ describe('Move Particles', () => {
     const acceleration = Vector(8, 4); // Accelerating
     const position = Vector(3, 8);
 
-    const particle = Particle(position, velocity, acceleration);
+    const particle = Particle(velocity, acceleration, 1, position);
 
     expect(move(particle).velocity).toEqual(Vector(10, 7));
   });
@@ -41,7 +41,7 @@ describe('Move Particles', () => {
     const acceleration = Vector(8, 4); // Accelerating
     const position = Vector(3, 8);
 
-    const particle = Particle(position, velocity, acceleration);
+    const particle = Particle(velocity, acceleration, 1, position);
 
     move(particle);
 
@@ -53,7 +53,7 @@ describe('Move Particles', () => {
     const acceleration = Vector(-5, -2); // Breaking
     const position = Vector(3, 8);
 
-    const particle = Particle(position, velocity, acceleration);
+    const particle = Particle(velocity, acceleration, 1, position);
 
     expect(move(particle).velocity).toEqual(Vector(-3, 1));
   });

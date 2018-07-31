@@ -11,7 +11,7 @@ export const move = (particle: ParticleType): ParticleType => {
   // Calculate the new position
   const position = add(particle.position, velocity);
 
-  return Particle(position, velocity, particle.acceleration, particle.id);
+  return Particle(velocity, particle.acceleration, particle.id, position);
 };
 
 export default Particle;
