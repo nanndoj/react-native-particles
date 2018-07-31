@@ -22,20 +22,13 @@ const App = React.createClass({
   render() {
     return (
       <Emitter
-        autoStart={false}
         numberOfParticles={50}
         emissionRate={5}
         interval={200}
         particleLife={1500}
         direction={-90}
         spread={360}
-        width={500}
-        height={500}
-        segments={15}
-        speed={6}
-        gravity={0.2}
-        fromPosition={() => ({ x: width / 2 - 50, y: height / 2 - 160 })}
-        style={{ position: 'absolute', top: 0, left: 0, zIndex: 999, backgroundColor: 'red' }}
+        fromPosition={{ x: 200, y: 200 }}
       >
         <Image
           source={require('../assets/images/large_star.png')}

@@ -10,11 +10,13 @@ import emitParticle from './utils/emit-particle';
 import type { Element } from 'react';
 import type { VectorType } from './entities/Vector';
 import type { ParticleType } from './entities/Particle';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
+
+const windowDimensions = Dimensions.get('window');
 
 export type EmitterType = {
   /** Start emitting particles after initialization */
-  autoStart: boolean,
+  autoStart?: boolean,
   /** The total of particles to be emitted */
   numberOfParticles: number,
   /** Interval between emitting a new batch of particles */
@@ -30,11 +32,11 @@ export type EmitterType = {
   /** The spread angle where particles are allowed to be rendered (in degrees) */
   spread: number,
   /** The speed of each particle */
-  speed: number,
+  speed?: number,
   /** Gravity force to be applied to the particle movement */
   gravity?: number,
   /** number of steps the animation will be divided ( more segments == more precise animation == slow performance) */
-  segments: number,
+  segments?: number,
   /** Width of the emitter */
   width: number,
   /** Height of the emitter */
@@ -69,9 +71,13 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
   isEmitting: boolean = true;
 
   static defaultProps = {
+    autoStart: true,
+    width: windowDimensions.width,
+    height: windowDimensions.height,
     fromPosition: Vector(0, 0),
+    gravity: 0.2,
     segments: 10,
-    autoStart: true
+    speed: 5
   };
 
   constructor(props: EmitterType) {
@@ -117,9 +123,7 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
   }
 
   shouldComponentUpdate(nextProps: EmitterType, nextState: EmitterState) {
-    return (
-      this.state.visibleParticles.length !== nextState.visibleParticles.length
-    );
+    return this.state.visibleParticles.length !== nextState.visibleParticles.length;
   }
 
   stopEmitting() {
@@ -146,23 +150,12 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
 
   _cleanUp() {
     // Remove particles scheduled to be destroyed
-    this.particles = this.particles.filter(
-      p => !this.particlesToDestroy.includes(p.particle.id)
-    );
+    this.particles = this.particles.filter(p => !this.particlesToDestroy.includes(p.particle.id));
     this.particlesToDestroy = [];
   }
 
   _calculate() {
-    const {
-      numberOfParticles,
-      emissionRate,
-      direction,
-      speed,
-      spread,
-      gravity,
-      segments,
-      interval
-    } = this.props;
+    const { numberOfParticles, emissionRate, direction, speed, spread, gravity, segments, interval } = this.props;
     if (!this.isEmitting) return;
 
     if (this.particlesCounter >= numberOfParticles) {
