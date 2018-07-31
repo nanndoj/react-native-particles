@@ -35,16 +35,16 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <Emitter
           autoStart={false}
-          numberOfParticles={50}
-          emissionRate={5}
-          interval={200}
-          particleLife={1500}
+          numberOfParticles={1000}
+          emissionRate={20}
+          interval={750}
+          particleLife={1000}
           direction={-90}
           spread={360}
           width={width}
           height={height}
-          segments={15}
-          speed={6}
+          segments={20}
+          speed={8}
           gravity={0.2}
           fromPosition={() => ({ x: width / 2 - 50, y: height / 2 - 160 })}
           style={{ position: 'absolute', top: 0, left: 0, zIndex: 999 }}
