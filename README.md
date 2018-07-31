@@ -30,11 +30,7 @@ const App = React.createClass({
         spread={360}
         fromPosition={{ x: 200, y: 200 }}
       >
-        <Image
-          source={require('../assets/images/large_star.png')}
-          resizeMode="stretch"
-          style={{ width: 100, height: 100 }}
-        />
+        <Text>Particle</Text>
       </Emitter>
     );
   }
