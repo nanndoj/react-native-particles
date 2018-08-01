@@ -2,7 +2,7 @@
 ## react-native-particles
 [![npm version](https://badge.fury.io/js/react-native-particles.svg)](https://badge.fury.io/js/react-native-particles)
 
-Declarative particle system for react native. Works on iOS and Android. It uses `Animated` api and `useNativeDriver:true` to archieve 60 FPS particles animation
+Declarative particle system for react native. Works on iOS and Android. It uses `Animated` api and `useNativeDriver:true` to get 60 FPS particles animation
 
 ## Add it to your project
 
