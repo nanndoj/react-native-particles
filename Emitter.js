@@ -116,7 +116,7 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
             autoStart={true}
             onLifeEnds={this._destroyParticle(obj.particle)}
           >
-            {this.isFunctionAsChild ? child(particle.id) : child}
+            {this.isFunctionAsChild ? child(obj.particle.id) : child}
           </AnimatedParticle>
         ))}
       </View>
