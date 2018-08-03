@@ -44,7 +44,7 @@ export type EmitterType = {
   /** Style of the emitter */
   style?: any,
   /** The particle content to be rendered */
-  children: Element<any>,
+  children: Element<any> | Function,
   /** Reference to the Emiter  */
   ref: EmitterType => void
 };
@@ -65,10 +65,13 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
   particlesToDestroy: number[] = [];
   // Number of generated particles
   particlesCounter: number = 0;
-  // Last time a bach of particles was emitted
+  // Last time a bunch of particles was emitted
   lastEmission: number;
   // Is emitting particles
   isEmitting: boolean = true;
+  // Is it function as child component
+  isFunctionAsChild: boolean;
+
 
   static defaultProps = {
     autoStart: true,
@@ -89,17 +92,19 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
     };
 
     (this: any)._loop = debounce(this._loop.bind(this), 100);
+
+    this.isFunctionAsChild = props.children instanceof Function;
   }
 
   render() {
     const { particleLife, children, style } = this.props;
     const { visibleParticles } = this.state;
 
-    const child = React.Children.only(children);
-
     // The job is done
     if (!this.isEmitting && !visibleParticles.length) return null;
 
+    const child = this.isFunctionAsChild ? children : React.Children.only(children);
+  
     return (
       <View style={style}>
         {visibleParticles.map((obj, i) => (
@@ -110,7 +115,7 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
             autoStart={true}
             onLifeEnds={this._destroyParticle(obj.particle)}
           >
-            {child instanceof Function ? child(obj.particle) : child}
+            { this.isFunctionAsChild ? child(particle.id) : child }
           </AnimatedParticle>
         ))}
       </View>
