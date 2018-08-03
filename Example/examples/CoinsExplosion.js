@@ -37,9 +37,17 @@ export default class CoinsExplosion extends Component<Props> {
       >
         {particle =>
           particle.id % 2 === 0 ? (
-            <Image style={styles.coin} source={require('../assets/coin.png')} resizeMode="stretch" />
+            <Image
+              style={styles.coin}
+              source={require('../assets/coin.png')}
+              resizeMode="stretch"
+            />
           ) : (
-            <Image style={styles.coin} source={require('../assets/star.png')} resizeMode="stretch" />
+            <Image
+              style={styles.coin}
+              source={require('../assets/star.png')}
+              resizeMode="stretch"
+            />
           )
         }
       </Emitter>

@@ -72,7 +72,6 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
   // Is it function as child component
   isFunctionAsChild: boolean;
 
-
   static defaultProps = {
     autoStart: true,
     width: windowDimensions.width,
@@ -103,8 +102,10 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
     // The job is done
     if (!this.isEmitting && !visibleParticles.length) return null;
 
-    const child = this.isFunctionAsChild ? children : React.Children.only(children);
-  
+    const child = this.isFunctionAsChild
+      ? children
+      : React.Children.only(children);
+
     return (
       <View style={style}>
         {visibleParticles.map((obj, i) => (
@@ -115,7 +116,7 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
             autoStart={true}
             onLifeEnds={this._destroyParticle(obj.particle)}
           >
-            { this.isFunctionAsChild ? child(particle.id) : child }
+            {this.isFunctionAsChild ? child(particle.id) : child}
           </AnimatedParticle>
         ))}
       </View>
