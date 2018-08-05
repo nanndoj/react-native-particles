@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
 import { Emitter } from 'react-native-particles';
 
@@ -41,7 +41,7 @@ export default class ConfettiEmitter extends Component<Props> {
         gravity={0.3}
         ref={emitter => (this.emitter = emitter)}
       >
-        <Confetti colors={ colors } />
+        <Confetti colors={colors} />
       </Emitter>
     );
   }
@@ -57,22 +57,23 @@ export default class ConfettiEmitter extends Component<Props> {
 
 class Confetti extends Component<Props> {
   static defaultProps = {
-    colors: ['red','blue','green']
-  }
+    colors: ['red', 'blue', 'green']
+  };
 
   constructor(props) {
     super(props);
     const random = Math.random();
     this.duration = Math.max(random * 10000, 5000);
-    this.counterClockWise = random > .5;
-    this.color = props.colors[Math.round((random *10) % (props.colors.length - 1))];
+    this.counterClockWise = random > 0.5;
+    this.color =
+      props.colors[Math.round((random * 10) % (props.colors.length - 1))];
   }
 
   render() {
     const { ref, colors } = this.props;
     return (
-      <Spin duration={ this.duration } counterClockWise={ this.counterClockWise }>
-        <View style={[styles.confetti, { backgroundColor: this.color }]}/>
+      <Spin duration={this.duration} counterClockWise={this.counterClockWise}>
+        <View style={[styles.confetti, { backgroundColor: this.color }]} />
       </Spin>
     );
   }

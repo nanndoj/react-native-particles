@@ -6,19 +6,27 @@ export default class Spin extends Component<Props> {
     super(props);
     this.state = {
       animatedValue: new Animated.Value(0)
-    }
+    };
   }
   render() {
     const { children, counterClockWise } = this.props;
     return (
-        <Animated.View
-          style={{ transform: [{ rotate: this.state.animatedValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: counterClockWise ? ['0deg', '360deg'] : ['360deg', '0deg'] 
-          }) }]}}
-        >
-          { children }
-        </Animated.View>
+      <Animated.View
+        style={{
+          transform: [
+            {
+              rotate: this.state.animatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: counterClockWise
+                  ? ['0deg', '360deg']
+                  : ['360deg', '0deg']
+              })
+            }
+          ]
+        }}
+      >
+        {children}
+      </Animated.View>
     );
   }
 
