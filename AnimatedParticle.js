@@ -35,10 +35,7 @@ type InterpolationConfig = {
   translateY: InterpolationConfigType
 };
 
-export default class AnimatedParticle extends React.Component<
-  IAnimatedParticle,
-  IAnimatedParticleState
-> {
+export default class AnimatedParticle extends React.Component<IAnimatedParticle, IAnimatedParticleState> {
   static defaultProps = {};
 
   constructor(props: IAnimatedParticle) {
@@ -67,11 +64,7 @@ export default class AnimatedParticle extends React.Component<
       ]
     };
 
-    return (
-      <Animated.View style={[styles.particle, animatedStyle]}>
-        {children}
-      </Animated.View>
-    );
+    return <Animated.View style={[styles.particle, animatedStyle]}>{children}</Animated.View>;
   }
 
   componentDidMount() {
@@ -80,23 +73,12 @@ export default class AnimatedParticle extends React.Component<
   }
 
   start = () => {
-    const { path, lifetime, onLifeEnds } = this.props;
+    const { path, onLifeEnds, onAnimate } = this.props;
     const { animatedValue, opacityValue } = this.state;
 
-    Animated.parallel([
-      Animated.timing(animatedValue, {
-        toValue: path.length,
-        duration: lifetime,
-        useNativeDriver: true
-      }),
-      Animated.timing(opacityValue, {
-        toValue: 0,
-        ease: Easing.inOut(Easing.quad),
-        delay: lifetime * 0.8,
-        duration: lifetime * 0.2,
-        useNativeDriver: true
-      })
-    ]).start(() => {
+    this.animation = this.animation || onAnimate(path, animatedValue, opacityValue);
+
+    this.animation.start(() => {
       onLifeEnds && onLifeEnds();
     });
   };

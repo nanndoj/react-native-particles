@@ -22,7 +22,7 @@ type Props = {
 
 export default class ConfettiEmitter extends Component<Props> {
   render() {
-    const { ref, colors } = this.props;
+    const { colors } = this.props;
     return (
       <Emitter
         autoStart={true}

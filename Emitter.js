@@ -1,32 +1,17 @@
 //@flow
+import type { Element } from 'react';
 import React from 'react';
-import debounce from 'lodash.debounce';
+import { Animated, Easing } from 'react-native';
 import { Vector } from './entities/Vector';
 import { fromAngle, toRadians } from './utils/vector-helpers';
 import { move } from './utils/move-particle';
-import AnimatedParticle from './AnimatedParticle';
 import emitParticle from './utils/emit-particle';
-
-import type { Element } from 'react';
 import type { VectorType } from './entities/Vector';
 import type { ParticleType } from './entities/Particle';
-import { View, Dimensions } from 'react-native';
+import type { BaseEmitterType } from './BaseEmitter';
+import BaseEmitter from './BaseEmitter';
 
-const windowDimensions = Dimensions.get('window');
-
-export type EmitterType = {
-  /** Start emitting particles after initialization */
-  autoStart?: boolean,
-  /** The total of particles to be emitted */
-  numberOfParticles: number,
-  /** Interval between emitting a new batch of particles */
-  interval: number,
-  /** The position from where the particles should be generated */
-  fromPosition?: VectorType | (() => VectorType),
-  /** Number of particles to be be emitted on each cycle */
-  emissionRate: number,
-  /** The particle life time (ms) */
-  particleLife: number,
+export type EmitterType = BaseEmitterType & {
   /** The direction angle of the particle (in degrees) */
   direction: number,
   /** The spread angle where particles are allowed to be rendered (in degrees) */
@@ -37,172 +22,59 @@ export type EmitterType = {
   gravity?: number,
   /** number of steps the animation will be divided ( more segments == more precise animation == slow performance) */
   segments?: number,
-  /** Width of the emitter */
-  width: number,
-  /** Height of the emitter */
-  height: number,
-  /** Style of the emitter */
-  style?: any,
-  /** The particle content to be rendered */
-  children: Element<any> | Function,
   /** Reference to the Emiter  */
   ref: EmitterType => void
 };
 
-interface EmitterState {
-  visibleParticles: ParticleConfig[];
-}
-
-type ParticleConfig = {
-  particle: ParticleType,
-  path: VectorType[]
-};
-
-class Emitter extends React.Component<EmitterType, EmitterState> {
-  // All particles
-  particles: ParticleConfig[] = [];
-  // Particles scheduled to be destroyed
-  particlesToDestroy: number[] = [];
-  // Number of generated particles
-  particlesCounter: number = 0;
-  // Last time a bunch of particles was emitted
-  lastEmission: number;
-  // Is emitting particles
-  isEmitting: boolean = true;
-  // Is it function as child component
-  isFunctionAsChild: boolean;
+export class Emitter extends React.Component<EmitterType> {
+  emitter: BaseEmitter;
 
   static defaultProps = {
-    autoStart: true,
-    width: windowDimensions.width,
-    height: windowDimensions.height,
-    fromPosition: Vector(0, 0),
     gravity: 0.2,
     segments: 10,
     speed: 5
   };
 
-  constructor(props: EmitterType) {
+  constructor(props) {
     super(props);
-
-    this.state = {
-      // List of visible particles
-      visibleParticles: []
-    };
-
-    (this: any)._loop = debounce(this._loop.bind(this), 100);
-
-    this.isFunctionAsChild = props.children instanceof Function;
+    this._calculate = this._calculate.bind(this);
+    this._animateParticle = this._animateParticle.bind(this);
+    this._storeEmitterRef = emitter => (this.emitter = emitter);
   }
 
   render() {
-    const { particleLife, children, style } = this.props;
-    const { visibleParticles } = this.state;
-
-    // The job is done
-    if (!this.isEmitting && !visibleParticles.length) return null;
-
-    const child = this.isFunctionAsChild
-      ? children
-      : React.Children.only(children);
-
+    const { children, ...props } = this.props;
     return (
-      <View style={style}>
-        {visibleParticles.map((obj, i) => (
-          <AnimatedParticle
-            key={obj.particle.id}
-            path={obj.path}
-            lifetime={particleLife}
-            autoStart={true}
-            onLifeEnds={this._destroyParticle(obj.particle)}
-          >
-            {this.isFunctionAsChild ? child(obj.particle) : child}
-          </AnimatedParticle>
-        ))}
-      </View>
+      <BaseEmitter
+        {...props}
+        onCalculate={this._calculate}
+        ref={this._storeEmitterRef}
+        onAnimate={this._animateParticle}
+      >
+        {children}
+      </BaseEmitter>
     );
   }
 
-  componentDidMount() {
-    const { autoStart } = this.props;
-    autoStart && this.start();
-  }
-
-  shouldComponentUpdate(nextProps: EmitterType, nextState: EmitterState) {
-    return (
-      this.state.visibleParticles.length !== nextState.visibleParticles.length
-    );
-  }
-
-  stopEmitting() {
-    const { particleLife } = this.props;
-    this.isEmitting = false;
-
-    // Schedule a final loop for when the last particles are done
-    setTimeout(this._loop.bind(this), particleLife + 1);
-  }
-
-  start() {
-    this.isEmitting = true;
-    this.particlesCounter = 0;
-    this.particles = [];
-    this._loop();
-  }
-
-  _loop() {
-    this._cleanUp();
-    this._calculate();
-    this._draw();
-    this._queue();
-  }
-
-  _cleanUp() {
-    // Remove particles scheduled to be destroyed
-    this.particles = this.particles.filter(
-      p => !this.particlesToDestroy.includes(p.particle.id)
-    );
-    this.particlesToDestroy = [];
-  }
-
-  _calculate() {
-    const {
-      numberOfParticles,
-      emissionRate,
-      direction,
-      speed,
-      spread,
-      gravity,
-      segments,
-      interval
-    } = this.props;
-    if (!this.isEmitting) return;
-
-    if (this.particlesCounter >= numberOfParticles) {
-      // Stop emitting new particles
-      return this.stopEmitting();
-    }
-
-    if (Date.now() - this.lastEmission < interval) return;
+  _calculate(initialPosition: VectorType, particlesCounter: number) {
+    const { numberOfParticles, emissionRate, direction, speed, spread, gravity, segments } = this.props;
 
     // if we're at our max, stop emitting.
     const rate = Math.min(numberOfParticles, emissionRate);
     const newParticles = [];
-
-    this.lastEmission = Date.now();
-
     // for [emissionRate], emit a particle
     for (let j = 0; j < rate; j++) {
       /*
           first step - Emit new particles
          */
       const particle = emitParticle(
-        this._getInitialPosition(),
+        initialPosition,
         fromAngle(toRadians(direction), speed),
         toRadians(spread),
         //Apply gravity to the vertical axis
         Vector(0, gravity),
         // Particle id
-        this.particlesCounter++
+        particlesCounter + j
       );
 
       // Calculate the particle path
@@ -219,50 +91,30 @@ class Emitter extends React.Component<EmitterType, EmitterState> {
       });
     }
 
-    // Add the new generated particles
-    this.particles.push(...newParticles);
+    return newParticles;
   }
 
-  _draw() {
-    const { width, height } = this.props;
-    // Filter the visible particles
-    this.setState({
-      visibleParticles: this.particles
-        // Remove the particles out of bounds
-        .filter(p => {
-          const { x, y } = p.particle.position;
-          return x >= 0 && x <= width && y >= 0 && y <= height;
-        })
-    });
+  _animateParticle(path, transformValue, opacityValue) {
+    const { particleLife } = this.props;
+    return Animated.parallel([
+      Animated.timing(transformValue, {
+        toValue: path.length,
+        duration: particleLife,
+        useNativeDriver: true
+      }),
+      Animated.timing(opacityValue, {
+        toValue: 0,
+        ease: Easing.inOut(Easing.quad),
+        delay: particleLife * 0.8,
+        duration: particleLife * 0.2,
+        useNativeDriver: true
+      })
+    ]);
   }
 
-  _queue() {
-    if (!this.isEmitting) return;
-    requestAnimationFrame(() => this._loop());
+  start() {
+    this.emitter.start();
   }
-
-  _getInitialPosition(): VectorType {
-    const { fromPosition } = this.props;
-
-    if (!fromPosition) return Vector(0, 0);
-
-    if (typeof fromPosition === 'function') {
-      return fromPosition();
-    }
-
-    if (Object.prototype.toString.apply(fromPosition) === '[object Object]') {
-      return fromPosition;
-    }
-
-    return Vector(0, 0);
-  }
-
-  _destroyParticle = (particle: ParticleType): Function => (): void => {
-    this.particlesToDestroy.push(particle.id);
-    if (!this.isEmitting) {
-      this._loop();
-    }
-  };
 }
 
 export default Emitter;

@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Emitter should be able to render a function as child 1`] = `<View />`;
-
 exports[`Emitter should consider child prop as a particle 1`] = `<View />`;

@@ -9,17 +9,16 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Image } from 'react-native';
 
-import { Emitter } from 'react-native-particles';
+import { Emitter } from '../react-native-particles/Emitter';
 
 const { width, height } = Dimensions.get('window');
 
 type Props = {};
 export default class CoinsExplosion extends Component<Props> {
   render() {
-    const { ref } = this.props;
     return (
       <Emitter
-        autoStart={true}
+        autoStart={false}
         numberOfParticles={50}
         interval={200}
         emissionRate={25}

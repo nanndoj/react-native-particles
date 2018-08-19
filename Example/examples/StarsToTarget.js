@@ -9,22 +9,26 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Vector } from 'react-native-particles/entities/Vector';
-import BurstAndMoveEmitter from '../BurstAndMoveEmitter';
+import BurstAndMoveEmitter from '../react-native-particles/BurstAndMoveEmitter';
 
 const { width, height } = Dimensions.get('window');
 
 type Props = {};
-export default class CoinsExplosion extends Component<Props> {
+export default class StarsToTarget extends Component<Props> {
   render() {
     return (
       <BurstAndMoveEmitter
-        initialPoint={Vector(0, 0)}
-        finalPoint={Vector(0, -height/2)}
+        autoStart={false}
+        numberOfParticles={10}
+        interval={100}
+        emissionRate={3}
+        particleLife={3000}
+        fromPosition={Vector(width / 2, height / 2)}
+        finalPoint={Vector(width / 2, 2)}
+        ref={emitter => (this.emitter = emitter)}
         radius={100}
-        autoStart={true}
-        numberOfParticles={50}
       >
-        <Image style={styles.coin} source={require('../assets/coin.png')} resizeMode="stretch" />
+        <Image style={styles.coin} source={require('../assets/star.png')} resizeMode="stretch" />
       </BurstAndMoveEmitter>
     );
   }
