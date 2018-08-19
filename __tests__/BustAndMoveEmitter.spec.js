@@ -3,7 +3,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import renderer from 'react-test-renderer';
-import Emitter from '../Emitter';
+import BurstAndMoveEmitter from '../BurstAndMoveEmitter';
 import { Vector } from 'react-native-particles/entities/Vector';
 
 jest.useFakeTimers();
@@ -27,19 +27,19 @@ jest.mock('Animated', () => {
 describe('BostAndMoveEmitter', () => {
   it('should consider child prop as a particle', () => {
     const component = renderer.create(
-      <BostAndMoveEmitter
+      <BurstAndMoveEmitter
         autoStart={true}
         numberOfParticles={10}
         interval={100}
         emissionRate={3}
         particleLife={3000}
-        fromPosition={Vector(width / 2, height / 2)}
-        finalPoint={Vector(width / 2, 2)}
+        fromPosition={Vector(200, 200)}
+        finalPoint={Vector(500, 500)}
         ref={emitter => (this.emitter = emitter)}
         radius={100}
       >
         <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
-      </BostAndMoveEmitter>
+      </BurstAndMoveEmitter>
     );
 
     expect(component.toJSON()).toMatchSnapshot();
@@ -48,20 +48,20 @@ describe('BostAndMoveEmitter', () => {
   it('should throw an error when trying to render more than one child', () => {
     expect(() =>
       renderer.create(
-        <BostAndMoveEmitter
+        <BurstAndMoveEmitter
           autoStart={true}
           numberOfParticles={10}
           interval={100}
           emissionRate={3}
           particleLife={3000}
-          fromPosition={Vector(width / 2, height / 2)}
-          finalPoint={Vector(width / 2, 2)}
+          fromPosition={Vector(200, 200)}
+          finalPoint={Vector(500, 500)}
           ref={emitter => (this.emitter = emitter)}
           radius={100}
         >
           <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
           <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
-        </BostAndMoveEmitter>
+        </BurstAndMoveEmitter>
       )
     ).toThrowError();
   });

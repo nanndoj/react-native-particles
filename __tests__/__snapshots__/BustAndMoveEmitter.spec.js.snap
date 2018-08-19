@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Emitter should consider child prop as a particle 1`] = `
+exports[`BostAndMoveEmitter should consider child prop as a particle 1`] = `
 <View
   style={
     Array [
