@@ -3220,6 +3220,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
 lodash.pad@^4.1.0:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/lodash.pad/-/lodash.pad-4.5.1.tgz#4330949a833a7c8da22cc20f6a26c4d59debba70"
@@ -4120,6 +4124,18 @@ react-is@^16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
+react-is@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+
+react-native-particles@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-particles/-/react-native-particles-0.0.5.tgz#23e40c9b45719aab44a08939821c915181fe88fb"
+  dependencies:
+    babel-jest "^23.4.2"
+    lodash.debounce "^4.0.8"
+    react-test-renderer "^16.4.2"
+
 react-native@0.56.0:
   version "0.56.0"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.56.0.tgz#66686f781ec39a44376aadd4bbc55c8573ab61e5"
@@ -4191,6 +4207,15 @@ react-test-renderer@16.4.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
     react-is "^16.4.1"
+
+react-test-renderer@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.2.tgz#4e03eca9359bb3210d4373f7547d1364218ef74e"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+    react-is "^16.4.2"
 
 react-timer-mixin@^0.13.2:
   version "0.13.4"
