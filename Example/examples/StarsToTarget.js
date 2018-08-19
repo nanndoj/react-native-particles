@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Vector } from 'react-native-particles/';
-import { BustAndMoveEmitter } from 'react-native-particles';
+import { BurstAndMoveEmitter } from 'react-native-particles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +17,7 @@ type Props = {};
 export default class StarsToTarget extends Component<Props> {
   render() {
     return (
-      <BustAndMoveEmitter
+      <BurstAndMoveEmitter
         autoStart={false}
         numberOfParticles={10}
         interval={100}
@@ -33,7 +33,7 @@ export default class StarsToTarget extends Component<Props> {
           source={require('../assets/star.png')}
           resizeMode="stretch"
         />
-      </BustAndMoveEmitter>
+      </BurstAndMoveEmitter>
     );
   }
 
