@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Image } from 'react-native';
 
-import { Emitter } from '../react-native-particles/Emitter';
+import { Emitter } from 'react-native-particles';
 
 const { width, height } = Dimensions.get('window');
 
