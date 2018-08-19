@@ -110,8 +110,13 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
     autoStart && this.start();
   }
 
-  shouldComponentUpdate(nextProps: BaseEmitterType, nextState: BaseEmitterState) {
-    return this.state.visibleParticles.length !== nextState.visibleParticles.length;
+  shouldComponentUpdate(
+    nextProps: BaseEmitterType,
+    nextState: BaseEmitterState
+  ) {
+    return (
+      this.state.visibleParticles.length !== nextState.visibleParticles.length
+    );
   }
 
   stopEmitting() {
@@ -138,7 +143,9 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
 
   _cleanUp() {
     // Remove particles scheduled to be destroyed
-    this.particles = this.particles.filter(p => !this.particlesToDestroy.includes(p.particle.id));
+    this.particles = this.particles.filter(
+      p => !this.particlesToDestroy.includes(p.particle.id)
+    );
     this.particlesToDestroy = [];
   }
 
@@ -156,7 +163,10 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
 
     this.lastEmission = Date.now();
 
-    const newParticles = onCalculate(this._getInitialPosition(), this.particlesCounter);
+    const newParticles = onCalculate(
+      this._getInitialPosition(),
+      this.particlesCounter
+    );
 
     // Add the new generated particles
     this.particles.push(...newParticles);

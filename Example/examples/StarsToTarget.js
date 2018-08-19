@@ -28,7 +28,11 @@ export default class StarsToTarget extends Component<Props> {
         ref={emitter => (this.emitter = emitter)}
         radius={100}
       >
-        <Image style={styles.coin} source={require('../assets/star.png')} resizeMode="stretch" />
+        <Image
+          style={styles.coin}
+          source={require('../assets/star.png')}
+          resizeMode="stretch"
+        />
       </BurstAndMoveEmitter>
     );
   }

@@ -57,7 +57,15 @@ export class Emitter extends React.Component<EmitterType> {
   }
 
   _calculate(initialPosition: VectorType, particlesCounter: number) {
-    const { numberOfParticles, emissionRate, direction, speed, spread, gravity, segments } = this.props;
+    const {
+      numberOfParticles,
+      emissionRate,
+      direction,
+      speed,
+      spread,
+      gravity,
+      segments
+    } = this.props;
 
     // if we're at our max, stop emitting.
     const rate = Math.min(numberOfParticles, emissionRate);

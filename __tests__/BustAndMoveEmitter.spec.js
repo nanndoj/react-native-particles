@@ -38,7 +38,10 @@ describe('BostAndMoveEmitter', () => {
         ref={emitter => (this.emitter = emitter)}
         radius={100}
       >
-        <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
+        <Image
+          source={require('./../Example/assets/coin.png')}
+          resizeMode="stretch"
+        />
       </BurstAndMoveEmitter>
     );
 
@@ -59,8 +62,14 @@ describe('BostAndMoveEmitter', () => {
           ref={emitter => (this.emitter = emitter)}
           radius={100}
         >
-          <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
-          <Image source={require('./../Example/assets/coin.png')} resizeMode="stretch" />
+          <Image
+            source={require('./../Example/assets/coin.png')}
+            resizeMode="stretch"
+          />
+          <Image
+            source={require('./../Example/assets/coin.png')}
+            resizeMode="stretch"
+          />
         </BurstAndMoveEmitter>
       )
     ).toThrowError();
