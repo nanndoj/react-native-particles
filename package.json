@@ -1,6 +1,6 @@
 {
   "name": "react-native-particles",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Declarative particle system for react native",
   "main": "index.js",
   "scripts": {
@@ -32,15 +32,15 @@
     "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
-    "babel-jest": "^23.4.2",
-    "react-test-renderer": "^16.4.2",
     "@babel/core": "^7.0.0-beta.55",
+    "babel-jest": "^23.4.2",
     "babel-preset-react-native": "^4.0.0",
     "husky": "^1.0.0-rc.13",
     "jest": "^23.4.2",
     "prettier": "^1.14.0",
     "react": "^16.4.2",
-    "react-native": "^0.56.0"
+    "react-native": "^0.56.0",
+    "react-test-renderer": "^16.4.2"
   },
   "peerDependencies": {
     "react-native": ">=0.20.0"
