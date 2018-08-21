@@ -1,16 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BostAndMoveEmitter should consider child prop as a particle 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "left": 0,
-        "position": "absolute",
-        "top": 0,
-      },
-      undefined,
-    ]
-  }
-/>
-`;
+exports[`BostAndMoveEmitter should consider child prop as a particle 1`] = `null`;
