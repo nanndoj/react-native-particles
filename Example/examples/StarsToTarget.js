@@ -29,7 +29,11 @@ export default class StarsToTarget extends Component<Props> {
         ref={emitter => (this.emitter = emitter)}
         radius={100}
       >
-        <Image style={styles.star} source={require('../assets/star.png')} resizeMode="stretch" />
+        <Image
+          style={styles.star}
+          source={require('../assets/star.png')}
+          resizeMode="stretch"
+        />
       </BurstAndMoveEmitter>
     );
   }
@@ -46,7 +50,7 @@ export default class StarsToTarget extends Component<Props> {
 const styles = StyleSheet.create({
   particleContainer: {
     elevation: 2,
-    zIndex: 2,
+    zIndex: 2
   },
   star: {
     width: 24,
