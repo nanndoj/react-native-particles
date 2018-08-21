@@ -18,22 +18,13 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <CoinsExplosion ref={emitter => (this.coinsExplosion = emitter)} />
-        <Confetti
-          colors={['red', 'blue', 'green', 'yellow', 'orange']}
-          ref={emitter => (this.confetti = emitter)}
-        />
-        <StarsToTarget ref={emitter => (this.starsToTarget = emitter)} />
-
-        <Button
-          title={'Coins explosion'}
-          onPress={() => this.coinsExplosion.start()}
-        />
+        <Button title={'Coins explosion'} onPress={() => this.coinsExplosion.start()} />
         <Button title={'Confetti'} onPress={() => this.confetti.start()} />
-        <Button
-          title={'Burst and Go'}
-          onPress={() => this.starsToTarget.start()}
-        />
+        <Button title={'Burst and Go'} onPress={() => this.starsToTarget.start()} />
+
+        <CoinsExplosion ref={emitter => (this.coinsExplosion = emitter)} />
+        <Confetti colors={['red', 'blue', 'green', 'yellow', 'orange']} ref={emitter => (this.confetti = emitter)} />
+        <StarsToTarget ref={emitter => (this.starsToTarget = emitter)} />
       </View>
     );
   }
@@ -43,7 +34,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    alignItems: 'center'
   }
 });

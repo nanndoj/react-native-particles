@@ -21,18 +21,15 @@ export default class StarsToTarget extends Component<Props> {
         autoStart={false}
         numberOfParticles={10}
         interval={100}
-        emissionRate={3}
-        particleLife={3000}
+        emissionRate={4}
+        particleContainerStyle={styles.particleContainer}
+        particleLife={2000}
         fromPosition={Vector(width / 2, height / 2)}
         finalPoint={Vector(width / 2, 2)}
         ref={emitter => (this.emitter = emitter)}
         radius={100}
       >
-        <Image
-          style={styles.coin}
-          source={require('../assets/star.png')}
-          resizeMode="stretch"
-        />
+        <Image style={styles.star} source={require('../assets/star.png')} resizeMode="stretch" />
       </BurstAndMoveEmitter>
     );
   }
@@ -47,14 +44,11 @@ export default class StarsToTarget extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  emitter: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0
+  particleContainer: {
+    elevation: 2,
+    zIndex: 2,
   },
-  coin: {
+  star: {
     width: 24,
     height: 24
   }

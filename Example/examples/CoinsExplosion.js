@@ -30,7 +30,7 @@ export default class CoinsExplosion extends Component<Props> {
         width={width}
         height={height}
         fromPosition={{ x: width / 2, y: height / 2 }}
-        style={styles.emitter}
+        particleStyle={styles.emitter}
         gravity={0.2}
         ref={emitter => (this.emitter = emitter)}
       >
@@ -53,13 +53,6 @@ export default class CoinsExplosion extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  emitter: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0
-  },
   coin: {
     width: 24,
     height: 24

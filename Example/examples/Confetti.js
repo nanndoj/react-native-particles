@@ -25,7 +25,7 @@ export default class ConfettiEmitter extends Component<Props> {
     const { colors } = this.props;
     return (
       <Emitter
-        autoStart={true}
+        autoStart={false}
         numberOfParticles={60}
         interval={100}
         emissionRate={3}
@@ -49,10 +49,6 @@ export default class ConfettiEmitter extends Component<Props> {
   start() {
     this.emitter.start();
   }
-
-  stopEmitting() {
-    this.emitter.stopEmitting();
-  }
 }
 
 class Confetti extends Component<Props> {
@@ -70,7 +66,6 @@ class Confetti extends Component<Props> {
   }
 
   render() {
-    const { ref, colors } = this.props;
     return (
       <Spin duration={this.duration} counterClockWise={this.counterClockWise}>
         <View style={[styles.confetti, { backgroundColor: this.color }]} />
