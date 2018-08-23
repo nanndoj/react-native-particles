@@ -23,7 +23,10 @@ export interface IBurstAndMoveEmitterState {
   particles: Array<Vector>[];
 }
 
-export default class BurstAndMoveEmitter extends Component<IBurstAndMoveEmitter, IBurstAndMoveEmitterState> {
+export default class BurstAndMoveEmitter extends Component<
+  IBurstAndMoveEmitter,
+  IBurstAndMoveEmitterState
+> {
   static defaultProps = {
     finalPoint: Vector(width, height),
     burstTime: 300,
@@ -72,10 +75,18 @@ export default class BurstAndMoveEmitter extends Component<IBurstAndMoveEmitter,
       const angle = Math.round(Math.random() * 360);
 
       // Calculate a vector based on the angle and magnitude.
-      const burstPoint = add(initialPosition, fromAngle(toRadians(angle), magnitude));
+      const burstPoint = add(
+        initialPosition,
+        fromAngle(toRadians(angle), magnitude)
+      );
 
       // first step - Emit new particles
-      const particle = Particle(Vector(0, 0), Vector(0, 0), particlesCounter + i, initialPosition);
+      const particle = Particle(
+        Vector(0, 0),
+        Vector(0, 0),
+        particlesCounter + i,
+        initialPosition
+      );
       const path: VectorType[] = [initialPosition, burstPoint, finalPoint];
 
       particles.push({
