@@ -21,9 +21,7 @@ export type EmitterType = BaseEmitterType & {
   /** Gravity force to be applied to the particle movement */
   gravity?: number,
   /** number of steps the animation will be divided ( more segments == more precise animation == slow performance) */
-  segments?: number,
-  /** Reference to the Emiter  */
-  ref: EmitterType => void
+  segments?: number
 };
 
 export class Emitter extends React.Component<EmitterType> {
@@ -35,7 +33,9 @@ export class Emitter extends React.Component<EmitterType> {
     speed: 5
   };
 
-  constructor(props) {
+  _storeEmitterRef: any => void;
+
+  constructor(props: EmitterType) {
     super(props);
     this._calculate = this._calculate.bind(this);
     this._animateParticle = this._animateParticle.bind(this);
@@ -50,22 +50,12 @@ export class Emitter extends React.Component<EmitterType> {
         onCalculate={this._calculate}
         ref={this._storeEmitterRef}
         onAnimate={this._animateParticle}
-      >
-        {children}
-      </BaseEmitter>
+      />
     );
   }
 
-  _calculate(initialPosition: VectorType, particlesCounter: number) {
-    const {
-      numberOfParticles,
-      emissionRate,
-      direction,
-      speed,
-      spread,
-      gravity,
-      segments
-    } = this.props;
+  _calculate = (initialPosition: VectorType, particlesCounter: number) => {
+    const { numberOfParticles, emissionRate, direction, speed, spread, gravity, segments } = this.props;
 
     // if we're at our max, stop emitting.
     const rate = Math.min(numberOfParticles, emissionRate);
@@ -73,8 +63,8 @@ export class Emitter extends React.Component<EmitterType> {
     // for [emissionRate], emit a particle
     for (let j = 0; j < rate; j++) {
       /*
-                first step - Emit new particles
-               */
+                      first step - Emit new particles
+                     */
       const particle = emitParticle(
         initialPosition,
         fromAngle(toRadians(direction), speed),
@@ -100,9 +90,9 @@ export class Emitter extends React.Component<EmitterType> {
     }
 
     return newParticles;
-  }
+  };
 
-  _animateParticle(path, transformValue, opacityValue) {
+  _animateParticle = (path, transformValue, opacityValue) => {
     const { particleLife } = this.props;
     return Animated.parallel([
       Animated.timing(transformValue, {
@@ -118,7 +108,7 @@ export class Emitter extends React.Component<EmitterType> {
         useNativeDriver: true
       })
     ]);
-  }
+  };
 
   start() {
     this.emitter.start();

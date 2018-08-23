@@ -6,27 +6,35 @@ import { Vector } from './entities/Vector';
 import { fromAngle, toRadians, add } from './utils/vector-helpers';
 import BaseEmitter from './BaseEmitter';
 import { Particle } from './entities/Particle';
-import type { ParticleConfig } from '../../Emitter';
+import type { ParticleConfig, BaseEmitterType } from './BaseEmitter';
 
 const { width, height } = Dimensions.get('window');
 
-type IBurstAndMoveEmitter = BaseEmitter & {
-  finalPoint?: VectorType,
-  radius: number
+type IBurstAndMoveEmitter = BaseEmitterType & {
+  finalPoint: VectorType,
+  radius: number,
+  burstTime: number,
+  waitTime: number,
+  moveTime: number,
+  onCalculate?: () => ParticleConfig[],
+  onAnimate?: (Animated.Value, Animated.Value) => void
 };
 export interface IBurstAndMoveEmitterState {
   particles: Array<Vector>[];
 }
 
-export default class BurstAndMoveEmitter extends Component<
-  IBurstAndMoveEmitter,
-  IBurstAndMoveEmitterState
-> {
+export default class BurstAndMoveEmitter extends Component<IBurstAndMoveEmitter, IBurstAndMoveEmitterState> {
   static defaultProps = {
-    finalPoint: Vector(width, height)
+    finalPoint: Vector(width, height),
+    burstTime: 300,
+    waitTime: 1000,
+    moveTime: 1000
   };
 
-  constructor(props) {
+  emitter: BaseEmitter;
+  _storeEmitterRef: BaseEmitter => void;
+
+  constructor(props: IBurstAndMoveEmitter) {
     super(props);
 
     this._calculate = this._calculate.bind(this);
@@ -49,7 +57,7 @@ export default class BurstAndMoveEmitter extends Component<
     );
   }
 
-  _calculate(initialPosition: VectorType, particlesCounter: number) {
+  _calculate = (initialPosition: VectorType, particlesCounter: number) => {
     const { numberOfParticles, radius, finalPoint, emissionRate } = this.props;
 
     const particles: ParticleConfig[] = [];
@@ -64,19 +72,11 @@ export default class BurstAndMoveEmitter extends Component<
       const angle = Math.round(Math.random() * 360);
 
       // Calculate a vector based on the angle and magnitude.
-      const burstPoint = add(
-        initialPosition,
-        fromAngle(toRadians(angle), magnitude)
-      );
+      const burstPoint = add(initialPosition, fromAngle(toRadians(angle), magnitude));
 
       // first step - Emit new particles
-      const particle = Particle(
-        Vector(0, 0),
-        Vector(0, 0),
-        particlesCounter + i,
-        initialPosition
-      );
-      const path = [initialPosition, burstPoint, finalPoint];
+      const particle = Particle(Vector(0, 0), Vector(0, 0), particlesCounter + i, initialPosition);
+      const path: VectorType[] = [initialPosition, burstPoint, finalPoint];
 
       particles.push({
         particle,
@@ -85,35 +85,33 @@ export default class BurstAndMoveEmitter extends Component<
     }
 
     return particles;
-  }
+  };
 
-  _animateParticle(path, transformValue, opacityValue) {
-    const { particleLife } = this.props;
+  _animateParticle = (path, transformValue, opacityValue) => {
+    const { burstTime, moveTime, waitTime } = this.props;
     return Animated.parallel([
       Animated.sequence([
         Animated.timing(transformValue, {
           toValue: 1,
-          duration: particleLife * 0.3,
+          duration: burstTime,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true
         }),
         Animated.timing(transformValue, {
           toValue: 2,
-          duration: particleLife * 0.5,
-          delay: particleLife * 0.2,
+          duration: moveTime,
+          delay: waitTime,
           easing: Easing.in(Easing.quad),
           useNativeDriver: true
+        }),
+        Animated.timing(opacityValue, {
+          toValue: 0,
+          duration: moveTime * 0.5,
+          useNativeDriver: true
         })
-      ]),
-      Animated.timing(opacityValue, {
-        toValue: 0,
-        ease: Easing.inOut(Easing.quad),
-        delay: particleLife * 0.8,
-        duration: particleLife * 0.2,
-        useNativeDriver: true
-      })
+      ])
     ]);
-  }
+  };
 
   start() {
     this.emitter.start();
