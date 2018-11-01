@@ -34,7 +34,7 @@ export type BaseEmitterType = {
   /** Reference to the Emiter  */
   ref: BaseEmitterType => void,
   /** Function to calculate a new bunch of particles */
-  onCalculate: () => ParticleConfig[],
+  onCalculate: (position: VectorType, count: number) => ParticleConfig[],
   /** Function used to animate particles */
   onAnimate: (Animated.Value, Animated.Value) => void
 };
@@ -59,6 +59,13 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
   lastEmission: number;
   // Is emitting particles
   isEmitting: boolean = true;
+
+  // Request animation frame callback reference
+  _raf: AnimationFrameID;
+  _timeout: TimeoutID;
+
+  // Component is mounted
+  _isMounted: boolean = false;
 
   static defaultProps = {
     autoStart: true,
@@ -108,6 +115,7 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     const { autoStart } = this.props;
     autoStart && this.start();
   }
@@ -121,12 +129,18 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
     );
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+    this._raf && cancelAnimationFrame(this._raf);
+    this._timeout && clearTimeout(this._timeout);
+  }
+
   stopEmitting() {
     const { particleLife } = this.props;
     this.isEmitting = false;
 
     // Schedule a final loop for when the last particles are done
-    setTimeout(this._loop.bind(this), particleLife + 1);
+    this._timeout = setTimeout(this._loop.bind(this), particleLife + 1);
   }
 
   start() {
@@ -190,7 +204,7 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
 
   _queue() {
     if (!this.isEmitting) return;
-    requestAnimationFrame(() => this._loop());
+    this._raf = requestAnimationFrame(() => this._loop());
   }
 
   _getInitialPosition(): VectorType {
@@ -211,7 +225,7 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
 
   _destroyParticle = (particle: ParticleType): Function => (): void => {
     this.particlesToDestroy.push(particle.id);
-    if (!this.isEmitting) {
+    if (!this.isEmitting && this._isMounted) {
       this._loop();
     }
   };
