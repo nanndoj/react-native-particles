@@ -36,7 +36,8 @@ export type BaseEmitterType = {
   /** Function to calculate a new bunch of particles */
   onCalculate: (position: VectorType, count: number) => ParticleConfig[],
   /** Function used to animate particles */
-  onAnimate: (Animated.Value, Animated.Value) => void
+  onAnimate: (Animated.Value, Animated.Value) => void,
+  infiniteLoop?: boolean
 };
 
 type BaseEmitterState = {
@@ -71,7 +72,8 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
     autoStart: true,
     width: windowDimensions.width,
     height: windowDimensions.height,
-    fromPosition: Vector(0, 0)
+    fromPosition: Vector(0, 0),
+    infinite: false
   };
 
   constructor(props: BaseEmitterType) {
@@ -170,7 +172,7 @@ class BaseEmitter extends React.Component<BaseEmitterType, BaseEmitterState> {
 
     if (!this.isEmitting) return;
 
-    if (this.particlesCounter >= numberOfParticles) {
+    if (this.particlesCounter >= numberOfParticles && !this.props.infiniteLoop) {
       // Stop emitting new particles
       return this.stopEmitting();
     }

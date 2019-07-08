@@ -62,6 +62,7 @@ Basically, the `children` of emmiter is clonned and transformed into a particle.
 - **`autoStart`** _(boolean)_ - Start emitting particles right after initialization
 - **`style`** _(Object)_ -  Style of the container view
 - **`children`** _(ReactElement)_ - Particle content
+- **`infiniteLoop`** _(boolean)_ - Emit particles infinitely
 
 ## Contribution
 **Issues** are welcome. Please add a screenshot of bug and code snippet. Quickest way to solve issue is to reproduce it on one of the examples.
