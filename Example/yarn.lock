@@ -4081,8 +4081,8 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
 qs@~6.5.1:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.3.tgz#3aeeffc91967ef6e35c0e488ef46fb296ab76aad"
 
 randomatic@^3.0.0:
   version "3.0.0"
@@ -4124,17 +4124,12 @@ react-is@^16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
-react-is@^16.4.2:
-  version "16.4.2"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
-
-react-native-particles@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/react-native-particles/-/react-native-particles-0.0.5.tgz#23e40c9b45719aab44a08939821c915181fe88fb"
+react-native-particles@nanndoj/react-native-particles#master:
+  version "0.0.7"
+  uid c71d9018ec14674c592f911a014d77f811425328
+  resolved "https://codeload.github.com/nanndoj/react-native-particles/tar.gz/c71d9018ec14674c592f911a014d77f811425328"
   dependencies:
-    babel-jest "^23.4.2"
     lodash.debounce "^4.0.8"
-    react-test-renderer "^16.4.2"
 
 react-native@0.56.0:
   version "0.56.0"
@@ -4207,15 +4202,6 @@ react-test-renderer@16.4.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
     react-is "^16.4.1"
-
-react-test-renderer@^16.4.2:
-  version "16.4.2"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.2.tgz#4e03eca9359bb3210d4373f7547d1364218ef74e"
-  dependencies:
-    fbjs "^0.8.16"
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
-    react-is "^16.4.2"
 
 react-timer-mixin@^0.13.2:
   version "0.13.4"
