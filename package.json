@@ -36,10 +36,10 @@
     "babel-jest": "^23.4.2",
     "babel-preset-react-native": "^4.0.0",
     "husky": "^1.0.0-rc.13",
-    "jest": "^23.4.2",
+    "jest": "^29.3.1",
     "prettier": "^1.14.0",
     "react": "^16.4.2",
-    "react-native": "^0.56.0",
+    "react-native": "^0.70.6",
     "react-test-renderer": "^16.4.2"
   },
   "peerDependencies": {
